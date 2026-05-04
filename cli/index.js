@@ -178,14 +178,24 @@ async function renderSettings() {
       name: 'contextSize',
       message: 'Context Window Size (tokens):',
       default: settings.contextSize,
-      validate: value => !isNaN(parseInt(value)) || 'Please enter a number'
+      validate: value => {
+        const num = parseInt(value, 10);
+        if (isNaN(num)) return 'Please enter a valid number';
+        if (num <= 0) return 'Context window size must be a positive integer';
+        return true;
+      }
     },
     {
       type: 'input',
       name: 'temperature',
       message: 'Temperature (0.0 to 2.0):',
       default: settings.temperature,
-      validate: value => !isNaN(parseFloat(value)) || 'Please enter a number'
+      validate: value => {
+        const num = parseFloat(value);
+        if (isNaN(num)) return 'Please enter a valid number';
+        if (num < 0.0 || num > 2.0) return 'Temperature must be tightly bounded between 0.0 and 2.0';
+        return true;
+      }
     },
     {
       type: 'list',
