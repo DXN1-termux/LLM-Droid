@@ -1,0 +1,6 @@
+{
+  "name": "LLM-Droid",
+  "description": "Terminal LLM manager optimized for every device, from Termux to Desktop, with auto-detection.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
