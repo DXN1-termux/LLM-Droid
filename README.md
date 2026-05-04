@@ -1,15 +1,27 @@
 <div align="center">
   <a href="https://github.com/DXN1-termux/LLM-Droid">
-    <img alt="LLM-Droid Header" src="https://placehold.co/1200x300/0A0A0B/4F46E5?text=LLM-DROID+v2&font=montserrat" width="100%" style="border-radius: 12px;">
+    <!-- SVG Header for Visual Appeal -->
+    <svg width="100%" height="200" xmlns="http://www.w3.org/2000/svg" style="border-radius:12px; background: linear-gradient(135deg, #0A0A0B 0%, #1e1b4b 100%);">
+      <defs>
+        <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#818cf8"/>
+          <stop offset="100%" stop-color="#c084fc"/>
+        </linearGradient>
+      </defs>
+      <text x="50%" y="45%" font-family="Montserrat, sans-serif" font-weight="900" font-size="64" fill="url(#textGrad)" text-anchor="middle" dominant-baseline="middle">LLM-DROID</text>
+      <text x="50%" y="70%" font-family="monospace" font-size="16" fill="#9ca3af" text-anchor="middle" dominant-baseline="middle">by @DXN1-termux</text>
+    </svg>
   </a>
 
-  <h1>🤖 The Terminal-Native Local Logic Engine</h1>
+  <h1>🤖 LLM-Droid</h1>
   <p><b>A hyper-optimized, visually stunning terminal LLM manager scaling from smartwatches to server clusters.</b></p>
   
   <p>
-    <a href="https://github.com/DXN1-termux/LLM-Droid/releases"><img src="https://img.shields.io/badge/Release-2.0.0--beta-4F46E5.svg?style=for-the-badge&logo=appveyor" alt="Version"></a>
+    <a href="https://github.com/DXN1-termux/LLM-Droid/releases"><img src="https://img.shields.io/badge/Release-2.0.0--beta-4F46E5.svg?style=for-the-badge&logo=github" alt="Version"></a>
+    <img src="https://img.shields.io/badge/Status-Active-success.svg?style=for-the-badge" alt="Status">
     <img src="https://img.shields.io/badge/Platform-Termux%20%7C%20macOS%20%7C%20Linux%20%7C%20Win-000000.svg?style=for-the-badge&logo=linux" alt="Platform">
     <img src="https://img.shields.io/badge/Backend-C++%20%2F%20Metal%20%2F%20CUDA-14B8A6.svg?style=for-the-badge&logo=cplusplus" alt="Backend">
+    <img src="https://img.shields.io/badge/Tech-TypeScript%20%7C%20Node.js-3178C6.svg?style=for-the-badge&logo=typescript" alt="Technology">
     <img src="https://img.shields.io/badge/Scale-10M%20to%20680B-E11D48.svg?style=for-the-badge&logo=rocket" alt="Scale">
     <img src="https://img.shields.io/badge/License-MIT-F59E0B.svg?style=for-the-badge" alt="License">
   </p>
