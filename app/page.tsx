@@ -1,8 +1,24 @@
 'use client';
 
-import React from 'react';
-import { Terminal, Download, Shield, Cpu, Database, Command, Star, ArrowRight } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Terminal, Download, Shield, Cpu, Database, Command, Star, ArrowRight, Activity, Zap, HardDrive } from 'lucide-react';
 import { motion } from 'motion/react';
+
+const useTypingEffect = (text: string, delay: number = 20, isReady: boolean = true) => {
+  const [displayedText, setDisplayedText] = useState('');
+  
+  useEffect(() => {
+    if (!isReady) return;
+    let i = 0;
+    const intervalId = setInterval(() => {
+      setDisplayedText(text.substring(0, i + 1));
+      i++;
+      if (i === text.length) clearInterval(intervalId);
+    }, delay);
+    return () => clearInterval(intervalId);
+  }, [text, delay, isReady]);
+  return displayedText;
+};
 
 export default function LandingPage() {
   return (
@@ -70,78 +86,168 @@ export default function LandingPage() {
           </motion.div>
         </div>
 
-        {/* Features grid */}
-        <div className="grid md:grid-cols-3 gap-6 mb-24">
-          <div className="bg-neutral-900/50 backdrop-blur-sm border border-neutral-800/80 rounded-2xl p-8 hover:border-indigo-500/50 transition-colors group">
-            <div className="w-12 h-12 bg-neutral-800 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <Cpu className="w-6 h-6 text-indigo-400" />
+        {/* Features grid - BENTO BOX STYLE */}
+        <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 lg:gap-6 mb-24 max-w-5xl mx-auto">
+          {/* Main big box */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="md:col-span-2 md:row-span-2 relative overflow-hidden bg-neutral-900/50 backdrop-blur-md border border-neutral-800 rounded-3xl p-8 hover:border-indigo-500/30 transition-all group shadow-2xl"
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div className="w-14 h-14 bg-indigo-500/20 rounded-2xl flex items-center justify-center mb-12 border border-indigo-500/30 group-hover:scale-110 transition-transform">
+                <Cpu className="w-7 h-7 text-indigo-400" />
             </div>
-            <h3 className="text-xl font-bold mb-3 tracking-tight">Deep Hardware Scaling</h3>
-            <p className="text-neutral-400 leading-relaxed text-sm">
-              Dynamically profiles RAM and architecture to allocate standard mobile logic matrices or heavy desktop GPU layers. 
+            <h3 className="text-3xl font-black mb-4 tracking-tight text-white">Deep Hardware<br/>Routing Protocol.</h3>
+            <p className="text-neutral-400 leading-relaxed text-base max-w-sm">
+              Dynamically profiles your RAM pool, Core Count, and Instruction Set (AVX2/NEON/MPS) to allocate matrices. Running on Termux? Nano 1B. Running on a Mac Studio? Ultra 70B.
             </p>
-          </div>
-          <div className="bg-neutral-900/50 backdrop-blur-sm border border-neutral-800/80 rounded-2xl p-8 hover:border-cyan-500/50 transition-colors group">
-            <div className="w-12 h-12 bg-neutral-800 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <Command className="w-6 h-6 text-cyan-400" />
+            <div className="absolute right-0 bottom-0 translate-x-1/4 translate-y-1/4 w-64 h-64 bg-indigo-500/20 blur-3xl rounded-full"></div>
+          </motion.div>
+
+          {/* Top right box */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="md:col-span-2 relative overflow-hidden bg-neutral-900/50 backdrop-blur-md border border-neutral-800 rounded-3xl p-8 hover:border-cyan-500/30 transition-all group"
+          >
+            <div className="absolute right-0 top-0 w-32 h-32 bg-cyan-500/10 blur-2xl rounded-full"></div>
+            <div className="flex justify-between items-start mb-6">
+              <div className="w-12 h-12 bg-cyan-500/20 rounded-xl flex items-center justify-center border border-cyan-500/30 group-hover:rotate-6 transition-transform">
+                  <Command className="w-6 h-6 text-cyan-400" />
+              </div>
+              <div className="flex gap-2">
+                 <span className="px-2 py-1 bg-neutral-950 border border-neutral-800 rounded-md text-[10px] font-mono text-neutral-400">TERMUX</span>
+                 <span className="px-2 py-1 bg-neutral-950 border border-neutral-800 rounded-md text-[10px] font-mono text-neutral-400">LINUX</span>
+                 <span className="px-2 py-1 bg-neutral-950 border border-neutral-800 rounded-md text-[10px] font-mono text-neutral-400">MAC</span>
+              </div>
             </div>
-            <h3 className="text-xl font-bold mb-3 tracking-tight">Cross-Platform Engine</h3>
+            <h3 className="text-xl font-bold mb-2 tracking-tight text-white">Cross-Platform Engine</h3>
             <p className="text-neutral-400 leading-relaxed text-sm">
-              Native bindings support for Android (Termux) specifically, circumventing Android background limits, + Linux, macOS, and Windows.
+              Native bindings support for Mobile devices via Termux circumvents aggressive background killing. Built with C++ performance layers.
             </p>
-          </div>
-          <div className="bg-neutral-900/50 backdrop-blur-sm border border-neutral-800/80 rounded-2xl p-8 hover:border-purple-500/50 transition-colors group">
-            <div className="w-12 h-12 bg-neutral-800 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <Database className="w-6 h-6 text-purple-400" />
+          </motion.div>
+
+          {/* Bottom right box 1 */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="relative overflow-hidden bg-neutral-900/50 backdrop-blur-md border border-neutral-800 rounded-3xl p-6 hover:border-purple-500/30 transition-all group flex flex-col justify-between"
+          >
+            <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center mb-4 border border-purple-500/30">
+                <Database className="w-5 h-5 text-purple-400" />
             </div>
-            <h3 className="text-xl font-bold mb-3 tracking-tight">Massive Model Catalog</h3>
-            <p className="text-neutral-400 leading-relaxed text-sm">
-              Supporting over 1000s of sizes natively. Instantly spin up models from 10M, 100M, 1B, 2B, all the way to clustered 680B enterprise models.
-            </p>
-          </div>
+            <div>
+              <h3 className="text-lg font-bold mb-2 tracking-tight text-white">10M to 680B</h3>
+              <p className="text-neutral-400 text-xs">Massive catalog of auto-downloadable quantizations.</p>
+            </div>
+          </motion.div>
+
+          {/* Bottom right box 2 */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+            className="relative overflow-hidden bg-neutral-900/50 backdrop-blur-md border border-neutral-800 rounded-3xl p-6 hover:border-emerald-500/30 transition-all group flex flex-col justify-between"
+          >
+            <div className="w-10 h-10 bg-emerald-500/20 rounded-xl flex items-center justify-center mb-4 border border-emerald-500/30">
+                <Zap className="w-5 h-5 text-emerald-400" />
+            </div>
+            <div>
+              <h3 className="text-lg font-bold mb-2 tracking-tight text-white">Zero-Copy Stream</h3>
+              <p className="text-neutral-400 text-xs">Tokens piped directly to STDOUT via SharedArrayBuffers.</p>
+            </div>
+          </motion.div>
         </div>
 
         {/* Termux terminal mockup */}
-        <div className="max-w-4xl mx-auto mb-24 relative">
-          <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-cyan-500 rounded-xl blur opacity-20"></div>
-          <div className="relative rounded-xl overflow-hidden border border-neutral-700 bg-black shadow-2xl">
-            <div className="flex items-center px-4 py-3 bg-neutral-900 border-b border-neutral-800">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="max-w-4xl mx-auto mb-32 relative"
+        >
+          <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-500 rounded-2xl blur-xl opacity-30 animate-pulse"></div>
+          <div className="relative rounded-2xl overflow-hidden border border-neutral-700 bg-[#0a0a0c] shadow-2xl">
+            {/* Terminal Header */}
+            <div className="flex items-center px-4 py-3 bg-neutral-900/80 border-b border-neutral-800 backdrop-blur">
               <div className="flex gap-2">
-                <div className="w-3 h-3 rounded-full bg-neutral-700"></div>
-                <div className="w-3 h-3 rounded-full bg-neutral-700"></div>
-                <div className="w-3 h-3 rounded-full bg-neutral-700"></div>
+                <div className="w-3 h-3 rounded-full bg-[#ff5f56] hover:bg-[#ff5f56]/80 transition-colors cursor-pointer"></div>
+                <div className="w-3 h-3 rounded-full bg-[#ffbd2e] hover:bg-[#ffbd2e]/80 transition-colors cursor-pointer"></div>
+                <div className="w-3 h-3 rounded-full bg-[#27c93f] hover:bg-[#27c93f]/80 transition-colors cursor-pointer"></div>
               </div>
-              <div className="mx-auto text-[10px] font-mono text-neutral-500 uppercase tracking-widest">
-                llm-droid — termux — 80x24
+              <div className="mx-auto text-[10px] font-mono text-neutral-500 uppercase tracking-widest flex items-center gap-2">
+                <HardDrive className="w-3 h-3"/> termux-environment — 80x24
               </div>
+              <div className="w-10"></div> {/* spacer to center text rigidly */}
             </div>
-            <div className="p-6 font-mono text-sm leading-relaxed overflow-x-auto text-indigo-300">
-              <div className="flex gap-2 text-neutral-500 mb-4 italic">
-                <span>$</span>
-                <span className="text-neutral-200">llmd run qwen-0.5b</span>
-              </div>
-              <div className="text-neutral-400 mb-1">[SYSTEM] Initialize Deep System Analytics (DSA)...</div>
-              <div className="text-green-500 mb-2">[OK] Found Termux (ARM64) | 5.8GB RAM</div>
-              <div className="text-neutral-400 mb-4">[INFO] Loading quantized model (Q4_K_M)...</div>
+            
+            {/* Terminal Body */}
+            <div className="p-6 md:p-8 font-mono text-sm leading-relaxed overflow-x-auto text-indigo-300 relative min-h-[400px]">
               
-              <div className="border border-neutral-800 bg-neutral-900/30 p-4 rounded mb-4">
-                <div className="text-xs text-neutral-500 mb-2 uppercase tracking-tight">Prompt / Persona Engine</div>
-                <div className="text-neutral-100">"Execute Socratic Tutor Mode..."</div>
-              </div>
+              <motion.div 
+                initial={{ opacity: 0, x: -10 }} 
+                whileInView={{ opacity: 1, x: 0 }} 
+                transition={{ delay: 0.1 }}
+                className="flex gap-2 text-neutral-500 mb-6 italic"
+              >
+                <span className="text-fuchsia-500 animate-pulse">❯</span>
+                <span className="text-neutral-200">llm-droid run smollm-135m</span>
+              </motion.div>
               
-              <div className="flex gap-2 text-white">
-                <span className="text-magenta-500 font-bold">You &gt;</span> Explain the concept of Rust borrowing.
-              </div>
-              <div className="flex gap-2 mt-2">
-                <span className="text-cyan-500 font-bold">Assistant &gt;</span>
-                <span className="text-neutral-300">To understand borrowing, what do you think would happen if two parts of a program tried to modify the exact same memory at the exact same time without knowing about each other?</span>
-              </div>
-              <div className="flex gap-2 animate-pulse mt-1">
-                <div className="w-2 h-4 bg-indigo-500 mt-1"></div>
-              </div>
+              <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 0.8 }} transition={{ delay: 0.5 }} className="text-neutral-400 mb-1">[SYSTEM] Invoking Deep System Analytics (DSA)...</motion.div>
+              <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 1.2 }} className="text-green-500 mb-3">[OK] Profile Generated: Termux | ARM64 | PICO-TIER | 5.8GB RAM</motion.div>
+              <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 1.8 }} className="text-cyan-400 mb-6 flex overflow-hidden">
+                <span className="whitespace-nowrap">[INFO] Allocating Matrix Layers [100%]</span>
+                <motion.span 
+                  initial={{ width: 0 }} 
+                  whileInView={{ width: "100%" }} 
+                  transition={{ delay: 1.8, duration: 1.5, ease: "linear" }}
+                  className="overflow-hidden ml-2 flex-grow whitespace-nowrap"
+                >
+                  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+                </motion.span>
+              </motion.div>
+              
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95 }} 
+                whileInView={{ opacity: 1, scale: 1 }} 
+                transition={{ delay: 3.5 }}
+                className="border border-neutral-800 bg-black p-4 rounded-xl mb-6 max-w-2xl relative overflow-hidden shadow-lg"
+              >
+                <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-indigo-500 to-cyan-500"></div>
+                <div className="text-xs text-neutral-500 mb-2 uppercase tracking-widest font-bold flex items-center gap-2">
+                  <Activity className="w-3 h-3 group-hover:rotate-180 transition-transform"/> Persona Pipeline Activated
+                </div>
+                <div className="text-neutral-200">"Execute Rust Socratic Tutor Mode. Provide semantic explanations."</div>
+              </motion.div>
+              
+              <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 4.5 }} className="flex gap-3 text-white items-start">
+                <span className="text-magenta-500 font-bold whitespace-nowrap pt-1">You &gt;</span> 
+                <span className="pt-1 font-medium">Explain the concept of Rust borrowing conceptually.</span>
+              </motion.div>
+
+              <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 5.5 }} className="flex gap-3 mt-4 items-start relative">
+                <span className="text-cyan-500 font-bold whitespace-nowrap">Assistant &gt;</span>
+                <span className="text-neutral-300 w-full leading-7">
+                  <span className="text-white">To understand borrowing, imagine a book in a library.</span>
+                  <br/>
+                  If two people tried to physically write in the exact same book at the exact same moment without coordination, the context (data state) would be destroyed.
+                  <br/>
+                  <span className="text-yellow-400">Rust's Borrow Checker enforces a compile-time rule:</span> you may have either one mutable reference (exclusive writer) OR multiple immutable references (many readers), but never both simultaneously.
+                  <span className="inline-block w-2 h-4 bg-cyan-500 ml-1 animate-pulse align-middle"></span>
+                </span>
+              </motion.div>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Install Instructions */}
         <div className="max-w-4xl mx-auto bg-neutral-900/30 border border-neutral-800 rounded-2xl p-8 lg:p-12">

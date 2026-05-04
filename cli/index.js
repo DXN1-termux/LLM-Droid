@@ -4,6 +4,7 @@ import inquirer from 'inquirer';
 import ora from 'ora';
 import boxen from 'boxen';
 import Table from 'cli-table3';
+import cliProgress from 'cli-progress';
 import { HardwareProfiler } from './core/hardware.js';
 import figlet from 'figlet';
 
@@ -144,12 +145,28 @@ async function renderHub(autoTier) {
 async function startInference(modelId) {
   const model = models.find(m => m.id === modelId) || models[0];
   console.log('\n');
-  const spinner = ora(`Allocating tensors and loading weights for ${chalk.bold(model.name)}...`).start();
   
-  await new Promise(r => setTimeout(r, 2000));
-  spinner.text = 'Warming up execution graph...';
-  await new Promise(r => setTimeout(r, 1000));
-  spinner.succeed(chalk.green(`Engine ready! [Bound to: ${model.name}]`));
+  const bar = new cliProgress.SingleBar({
+    format: `${chalk.cyan('Matrix Allocator')} | ${chalk.blue('{bar}')} | {percentage}% || {value}/{total} Shards || Status: {status}`,
+    barCompleteChar: '\u2588',
+    barIncompleteChar: '\u2591',
+    hideCursor: true
+  });
+  
+  bar.start(100, 0, { status: "Fetching tensor definitions..." });
+
+  for(let i = 1; i <= 100; i++) {
+     let statusMsg = "Writing weights to memory...";
+     if (i > 30) statusMsg = "Aligning memory pointers...";
+     if (i > 70) statusMsg = "Configuring CUDA/Metal bounds...";
+     if (i > 90) statusMsg = "Finalizing logic graph...";
+     
+     bar.update(i, { status: chalk.gray(statusMsg) });
+     await new Promise(r => setTimeout(r, 20));
+  }
+  bar.stop();
+
+  console.log(chalk.green(`\n\u2714 Engine ready! Bound securely to: ${chalk.bold(model.name)}`));
 
   console.log(chalk.gray(`\nType '/help' for commands, or 'exit' to quit.`));
   console.log(chalk.gray(`Current Context: 0/${model.tier === 'nano' ? '2048' : '8192'} chars\n`));
