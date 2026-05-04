@@ -1,9 +1,6 @@
 <div align="center">
   <a href="https://github.com/DXN1-termux/LLM-Droid">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://placehold.co/1200x300/000000/4F46E5?text=LLM-DROID+v2&font=montserrat">
-      <img alt="LLM-Droid Header" src="https://placehold.co/1200x300/0A0A0B/4F46E5?text=LLM-DROID+v2&font=montserrat" width="100%" style="border-radius: 12px;">
-    </picture>
+    <img alt="LLM-Droid Header" src="https://placehold.co/1200x300/0A0A0B/4F46E5?text=LLM-DROID+v2&font=montserrat" width="100%" style="border-radius: 12px;">
   </a>
 
   <h1>🤖 The Terminal-Native Local Logic Engine</h1>
@@ -270,9 +267,9 @@ npm run dev
 
 ## 🤝 Join the Revolution (Contributing)
 
-We want to reach **300.000 stars**, and the only way we do that is with open-source brutality. If you find a bug, rewrite it. If you want a new feature, fork it and PR.
+We want to reach **300,000 stars**, and the only way we do that is with open-source brutality. If you find a bug, rewrite it. If you want a new feature, fork it and PR.
 
-1. `git clone https://github.com/YOUR_GIT/LLM-Droid.git`
+1. `git clone https://github.com/DXN1-termux/LLM-Droid.git`
 2. Make your brutal high-level logic implementation.
 3. PR against the `main` branch.
 
